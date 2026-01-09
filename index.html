@@ -4,18 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classic Barbershop - Premium Grooming Experience</title>
+    <link rel="icon" type="image/png" href="barber_pole.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Montserrat:wght@300;400;600;700;800;900&family=Cormorant+Garamond:wght@400;600;700&family=Lora:wght@300;400;600&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Nunito:wght@400;600;700;800&family=Comfortaa:wght@400;600;700&family=Quicksand:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&family=Syne:wght@400;600;700;800&family=Bungee&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="theme-modern">
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
+            <div class="logo logo-modern">
                 <img src="barber_shop_logo.png" alt="Barbershop Logo" class="logo-img">
                 <span class="logo-text">Classic Cuts</span>
+            </div>
+            <div class="logo logo-classic">
+                <img src="barber_shop_logo.png" alt="Barbershop Logo" class="logo-img-classic">
+            </div>
+            <div class="logo logo-pole">
+                <img src="barber_pole.png" alt="Barber Pole" class="logo-img-pole">
+                <img src="barber_shop_logo.png" alt="Barbershop Logo" class="logo-img-classic">
             </div>
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
@@ -39,6 +47,14 @@
             <h1 class="hero-title">Where Tradition Meets Style</h1>
             <p class="hero-subtitle">Experience the art of classic barbering in an atmosphere of timeless elegance</p>
             <a href="#contact" class="btn btn-primary">Book Appointment</a>
+        </div>
+        <div class="hero-classic-decorations">
+            <div class="hero-barber-pole">
+                <img src="barber_pole.png" alt="Barber Pole">
+            </div>
+            <div class="hero-scissors">
+                <img src="scissors.png" alt="Scissors">
+            </div>
         </div>
         <div class="scroll-indicator">
             <span></span>
@@ -234,6 +250,63 @@
             </div>
         </div>
     </footer>
+
+    <!-- Design Toggle Button -->
+    <button class="design-toggle" id="designToggle" aria-label="Switch design">
+        <svg class="refresh-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+            <path d="M21 3v5h-5"></path>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+            <path d="M3 21v-5h5"></path>
+        </svg>
+        <span class="toggle-text">Another Design</span>
+    </button>
+
+    <!-- Design Number Indicator -->
+    <div class="design-number" id="designNumber" aria-label="Design number"></div>
+
+    <!-- Gallery Modal for Terminal Theme -->
+    <div id="galleryModal" class="gallery-modal">
+        <div class="gallery-modal-content">
+            <button class="gallery-close" aria-label="Close gallery">×</button>
+            <button class="gallery-prev" aria-label="Previous image">‹</button>
+            <button class="gallery-next" aria-label="Next image">›</button>
+            <div class="gallery-main-image">
+                <img id="galleryMainImg" src="" alt="Gallery Image">
+            </div>
+            <div class="gallery-thumbnails">
+                <img src="barber_interior_chairs_farshot.png" alt="Barbershop Interior" class="gallery-thumb active" data-full="barber_interior_chairs_farshot.png">
+                <img src="far_shot_interior.png" alt="Interior View" class="gallery-thumb" data-full="far_shot_interior.png">
+                <img src="barber_cut_closeshot.png" alt="Barber at Work" class="gallery-thumb" data-full="barber_cut_closeshot.png">
+                <img src="barber_midshot.png" alt="Professional Service" class="gallery-thumb" data-full="barber_midshot.png">
+                <img src="barber_supercloseshot.png" alt="Detail Work" class="gallery-thumb" data-full="barber_supercloseshot.png">
+                <img src="cut_midshot.jpg" alt="Professional Haircut" class="gallery-thumb" data-full="cut_midshot.jpg">
+            </div>
+            <div class="gallery-counter">
+                <span id="galleryCurrent">1</span> / <span id="galleryTotal">6</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Classic Theme Decorative Elements -->
+    <div class="classic-decorations">
+        <div class="barber-pole-decoration">
+            <img src="barber_pole.png" alt="Barber Pole" class="decorative-pole">
+        </div>
+        <div class="scissors-decoration">
+            <img src="scissors.png" alt="Scissors" class="decorative-scissors">
+        </div>
+    </div>
+
+    <!-- Vintage Theme Decorative Elements -->
+    <div class="vintage-decorations">
+        <div class="vintage-badge vintage-badge-1">
+            <div class="badge-content">EST. 1950</div>
+        </div>
+        <div class="vintage-badge vintage-badge-2">
+            <div class="badge-content">CLASSIC CUTS</div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -120,3 +120,269 @@ document.querySelectorAll('.gallery-item').forEach((item, index) => {
     item.style.transitionDelay = `${index * 0.1}s`;
 });
 
+// Design Theme Toggle
+const designToggle = document.getElementById('designToggle');
+const body = document.body;
+const designNumber = document.getElementById('designNumber');
+
+// Define theme order
+const themes = ['modern', 'classic', 'vintage', 'minimalist', 'luxury', 'apple', 'stark', 'disney', 'creative', 'stark-creative', 'experimental', 'isometric', 'liquid', 'interactive', 'facebook', 'dark', 'words', 'words-classic', 'words-aesthetic', 'chaos', 'terminal'];
+
+// Check for saved theme preference or default to modern
+const currentTheme = localStorage.getItem('theme') || 'modern';
+body.className = `theme-${currentTheme}`;
+
+// Initialize design number
+let currentThemeIndex = themes.indexOf(currentTheme);
+if (currentThemeIndex === -1) currentThemeIndex = 0;
+designNumber.textContent = (currentThemeIndex + 1).toString().padStart(2, '0');
+
+designToggle.addEventListener('click', () => {
+    // Cycle through themes: modern -> classic -> vintage -> minimalist -> luxury -> apple -> stark -> disney -> creative -> stark-creative -> experimental -> modern
+    if (body.classList.contains('theme-modern')) {
+        body.classList.remove('theme-modern');
+        body.classList.add('theme-classic');
+        localStorage.setItem('theme', 'classic');
+    } else if (body.classList.contains('theme-classic')) {
+        body.classList.remove('theme-classic');
+        body.classList.add('theme-vintage');
+        localStorage.setItem('theme', 'vintage');
+    } else if (body.classList.contains('theme-vintage')) {
+        body.classList.remove('theme-vintage');
+        body.classList.add('theme-minimalist');
+        localStorage.setItem('theme', 'minimalist');
+    } else if (body.classList.contains('theme-minimalist')) {
+        body.classList.remove('theme-minimalist');
+        body.classList.add('theme-luxury');
+        localStorage.setItem('theme', 'luxury');
+    } else if (body.classList.contains('theme-luxury')) {
+        body.classList.remove('theme-luxury');
+        body.classList.add('theme-apple');
+        localStorage.setItem('theme', 'apple');
+    } else if (body.classList.contains('theme-apple')) {
+        body.classList.remove('theme-apple');
+        body.classList.add('theme-stark');
+        localStorage.setItem('theme', 'stark');
+    } else if (body.classList.contains('theme-stark')) {
+        body.classList.remove('theme-stark');
+        body.classList.add('theme-disney');
+        localStorage.setItem('theme', 'disney');
+    } else if (body.classList.contains('theme-disney')) {
+        body.classList.remove('theme-disney');
+        body.classList.add('theme-creative');
+        localStorage.setItem('theme', 'creative');
+    } else if (body.classList.contains('theme-creative')) {
+        body.classList.remove('theme-creative');
+        body.classList.add('theme-stark-creative');
+        localStorage.setItem('theme', 'stark-creative');
+    } else if (body.classList.contains('theme-stark-creative')) {
+        body.classList.remove('theme-stark-creative');
+        body.classList.add('theme-experimental');
+        localStorage.setItem('theme', 'experimental');
+    } else if (body.classList.contains('theme-experimental')) {
+        body.classList.remove('theme-experimental');
+        body.classList.add('theme-isometric');
+        localStorage.setItem('theme', 'isometric');
+    } else if (body.classList.contains('theme-isometric')) {
+        body.classList.remove('theme-isometric');
+        body.classList.add('theme-liquid');
+        localStorage.setItem('theme', 'liquid');
+    } else if (body.classList.contains('theme-liquid')) {
+        body.classList.remove('theme-liquid');
+        body.classList.add('theme-interactive');
+        localStorage.setItem('theme', 'interactive');
+    } else if (body.classList.contains('theme-interactive')) {
+        body.classList.remove('theme-interactive');
+        body.classList.add('theme-facebook');
+        localStorage.setItem('theme', 'facebook');
+    } else if (body.classList.contains('theme-facebook')) {
+        body.classList.remove('theme-facebook');
+        body.classList.add('theme-dark');
+        localStorage.setItem('theme', 'dark');
+    } else if (body.classList.contains('theme-dark')) {
+        body.classList.remove('theme-dark');
+        body.classList.add('theme-words');
+        localStorage.setItem('theme', 'words');
+    } else if (body.classList.contains('theme-words')) {
+        body.classList.remove('theme-words');
+        body.classList.add('theme-words-classic');
+        localStorage.setItem('theme', 'words-classic');
+    } else if (body.classList.contains('theme-words-classic')) {
+        body.classList.remove('theme-words-classic');
+        body.classList.add('theme-words-aesthetic');
+        localStorage.setItem('theme', 'words-aesthetic');
+    } else if (body.classList.contains('theme-words-aesthetic')) {
+        body.classList.remove('theme-words-aesthetic');
+        body.classList.add('theme-chaos');
+        localStorage.setItem('theme', 'chaos');
+    } else if (body.classList.contains('theme-chaos')) {
+        body.classList.remove('theme-chaos');
+        body.classList.add('theme-terminal');
+        localStorage.setItem('theme', 'terminal');
+    } else {
+        body.classList.remove('theme-terminal');
+        body.classList.add('theme-modern');
+        localStorage.setItem('theme', 'modern');
+    }
+    
+    // Update design number
+    currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+    designNumber.textContent = (currentThemeIndex + 1).toString().padStart(2, '0');
+    
+    // Close gallery if open when switching themes
+    const galleryModal = document.getElementById('galleryModal');
+    if (galleryModal) {
+        galleryModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    // Scroll to top for better visual transition
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    
+    // Close mobile menu if open
+    navMenu.classList.remove('active');
+    const spans = navToggle.querySelectorAll('span');
+    spans[0].style.transform = 'none';
+    spans[1].style.opacity = '1';
+    spans[2].style.transform = 'none';
+});
+
+// Gallery Modal for Terminal Theme
+const galleryModal = document.getElementById('galleryModal');
+const galleryItems = document.querySelectorAll('.gallery-item');
+const galleryThumbs = document.querySelectorAll('.gallery-thumb');
+const galleryMainImg = document.getElementById('galleryMainImg');
+const galleryClose = document.querySelector('.gallery-close');
+const galleryPrev = document.querySelector('.gallery-prev');
+const galleryNext = document.querySelector('.gallery-next');
+const galleryCurrent = document.getElementById('galleryCurrent');
+const galleryTotal = document.getElementById('galleryTotal');
+
+let currentImageIndex = 0;
+const galleryImages = [
+    'barber_interior_chairs_farshot.png',
+    'far_shot_interior.png',
+    'barber_cut_closeshot.png',
+    'barber_midshot.png',
+    'barber_supercloseshot.png',
+    'cut_midshot.jpg'
+];
+
+// Enable gallery for terminal and modern themes
+function initGallery() {
+    if (!document.body.classList.contains('theme-terminal') && !document.body.classList.contains('theme-modern')) {
+        return;
+    }
+
+    galleryItems.forEach((item, index) => {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => {
+            openGallery(index);
+        });
+    });
+
+    if (galleryThumbs.length > 0) {
+        galleryThumbs.forEach((thumb, index) => {
+            thumb.addEventListener('click', () => {
+                currentImageIndex = index;
+                updateGallery();
+            });
+        });
+    }
+
+    if (galleryClose) {
+        galleryClose.addEventListener('click', closeGallery);
+    }
+
+    if (galleryPrev) {
+        galleryPrev.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            updateGallery();
+        });
+    }
+
+    if (galleryNext) {
+        galleryNext.addEventListener('click', () => {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            updateGallery();
+        });
+    }
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && galleryModal && galleryModal.classList.contains('active')) {
+            closeGallery();
+        }
+        if (e.key === 'ArrowLeft' && galleryModal && galleryModal.classList.contains('active')) {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            updateGallery();
+        }
+        if (e.key === 'ArrowRight' && galleryModal && galleryModal.classList.contains('active')) {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            updateGallery();
+        }
+    });
+
+    // Close on background click
+    if (galleryModal) {
+        galleryModal.addEventListener('click', (e) => {
+            if (e.target === galleryModal) {
+                closeGallery();
+            }
+        });
+    }
+}
+
+function openGallery(index) {
+    if (!document.body.classList.contains('theme-terminal') && !document.body.classList.contains('theme-modern')) {
+        return;
+    }
+    currentImageIndex = index;
+    updateGallery();
+    if (galleryModal) {
+        galleryModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeGallery() {
+    if (galleryModal) {
+        galleryModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+function updateGallery() {
+    if (galleryMainImg && galleryImages[currentImageIndex]) {
+        galleryMainImg.src = galleryImages[currentImageIndex];
+        galleryMainImg.alt = `Gallery Image ${currentImageIndex + 1}`;
+    }
+    
+    if (galleryCurrent) {
+        galleryCurrent.textContent = currentImageIndex + 1;
+    }
+    
+    if (galleryThumbs.length > 0) {
+        galleryThumbs.forEach((thumb, index) => {
+            if (index === currentImageIndex) {
+                thumb.classList.add('active');
+            } else {
+                thumb.classList.remove('active');
+            }
+        });
+    }
+}
+
+// Initialize gallery on page load
+initGallery();
+
+// Re-initialize gallery when theme changes
+designToggle.addEventListener('click', () => {
+    setTimeout(() => {
+        initGallery();
+    }, 100);
+});
+
