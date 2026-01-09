@@ -280,9 +280,9 @@ let galleryNextHandler = null;
 let galleryKeyHandler = null;
 let galleryModalHandler = null;
 
-// Enable gallery for terminal and modern themes
+// Enable gallery for terminal, modern, classic, vintage, and minimalist themes
 function initGallery() {
-    if (!document.body.classList.contains('theme-terminal') && !document.body.classList.contains('theme-modern')) {
+    if (!document.body.classList.contains('theme-terminal') && !document.body.classList.contains('theme-modern') && !document.body.classList.contains('theme-classic') && !document.body.classList.contains('theme-vintage') && !document.body.classList.contains('theme-minimalist')) {
         return;
     }
 
@@ -411,7 +411,7 @@ function initGallery() {
 }
 
 function openGallery(index) {
-    if (!document.body.classList.contains('theme-terminal') && !document.body.classList.contains('theme-modern')) {
+    if (!document.body.classList.contains('theme-terminal') && !document.body.classList.contains('theme-modern') && !document.body.classList.contains('theme-classic') && !document.body.classList.contains('theme-vintage') && !document.body.classList.contains('theme-minimalist')) {
         return;
     }
     currentImageIndex = index;
