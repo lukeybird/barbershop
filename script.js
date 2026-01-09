@@ -252,8 +252,8 @@ designToggle.addEventListener('click', () => {
 
 // Gallery Modal for Terminal Theme
 const galleryModal = document.getElementById('galleryModal');
-const galleryItems = document.querySelectorAll('.gallery-item');
-const galleryThumbs = document.querySelectorAll('.gallery-thumb');
+let galleryItems = document.querySelectorAll('.gallery-item');
+let galleryThumbs = document.querySelectorAll('.gallery-thumb');
 const galleryMainImg = document.getElementById('galleryMainImg');
 const galleryClose = document.querySelector('.gallery-close');
 const galleryPrev = document.querySelector('.gallery-prev');
@@ -271,68 +271,142 @@ const galleryImages = [
     'cut_midshot.jpg'
 ];
 
+// Store event handlers so we can remove them
+let galleryItemHandlers = [];
+let galleryThumbHandlers = [];
+let galleryCloseHandler = null;
+let galleryPrevHandler = null;
+let galleryNextHandler = null;
+let galleryKeyHandler = null;
+let galleryModalHandler = null;
+
 // Enable gallery for terminal and modern themes
 function initGallery() {
     if (!document.body.classList.contains('theme-terminal') && !document.body.classList.contains('theme-modern')) {
         return;
     }
 
+    // Remove old event listeners first
+    galleryItems.forEach((item, index) => {
+        if (galleryItemHandlers[index]) {
+            item.removeEventListener('click', galleryItemHandlers[index]);
+        }
+    });
+    galleryItemHandlers = [];
+
+    // Remove old thumb handlers
+    galleryThumbs.forEach((thumb, index) => {
+        if (galleryThumbHandlers[index]) {
+            thumb.removeEventListener('click', galleryThumbHandlers[index]);
+        }
+    });
+    galleryThumbHandlers = [];
+
+    // Remove old button handlers
+    if (galleryClose && galleryCloseHandler) {
+        galleryClose.removeEventListener('click', galleryCloseHandler);
+    }
+    if (galleryPrev && galleryPrevHandler) {
+        galleryPrev.removeEventListener('click', galleryPrevHandler);
+    }
+    if (galleryNext && galleryNextHandler) {
+        galleryNext.removeEventListener('click', galleryNextHandler);
+    }
+
+    // Remove old keyboard handler
+    if (galleryKeyHandler) {
+        document.removeEventListener('keydown', galleryKeyHandler);
+    }
+
+    // Remove old modal click handler
+    if (galleryModal && galleryModalHandler) {
+        galleryModal.removeEventListener('click', galleryModalHandler);
+    }
+
+    // Query fresh elements
+    galleryItems = document.querySelectorAll('.gallery-item');
+    galleryThumbs = document.querySelectorAll('.gallery-thumb');
+
+    // Add new event listeners
     galleryItems.forEach((item, index) => {
         item.style.cursor = 'pointer';
-        item.addEventListener('click', () => {
+        const handler = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             openGallery(index);
-        });
+        };
+        galleryItemHandlers[index] = handler;
+        item.addEventListener('click', handler);
     });
 
     if (galleryThumbs.length > 0) {
         galleryThumbs.forEach((thumb, index) => {
-            thumb.addEventListener('click', () => {
+            const handler = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 currentImageIndex = index;
                 updateGallery();
-            });
+            };
+            galleryThumbHandlers[index] = handler;
+            thumb.addEventListener('click', handler);
         });
     }
 
     if (galleryClose) {
-        galleryClose.addEventListener('click', closeGallery);
+        galleryCloseHandler = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            closeGallery();
+        };
+        galleryClose.addEventListener('click', galleryCloseHandler);
     }
 
     if (galleryPrev) {
-        galleryPrev.addEventListener('click', () => {
+        galleryPrevHandler = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
             updateGallery();
-        });
+        };
+        galleryPrev.addEventListener('click', galleryPrevHandler);
     }
 
     if (galleryNext) {
-        galleryNext.addEventListener('click', () => {
+        galleryNextHandler = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
             updateGallery();
-        });
+        };
+        galleryNext.addEventListener('click', galleryNextHandler);
     }
 
     // Close on escape key
-    document.addEventListener('keydown', (e) => {
+    galleryKeyHandler = (e) => {
         if (e.key === 'Escape' && galleryModal && galleryModal.classList.contains('active')) {
             closeGallery();
         }
         if (e.key === 'ArrowLeft' && galleryModal && galleryModal.classList.contains('active')) {
+            e.preventDefault();
             currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
             updateGallery();
         }
         if (e.key === 'ArrowRight' && galleryModal && galleryModal.classList.contains('active')) {
+            e.preventDefault();
             currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
             updateGallery();
         }
-    });
+    };
+    document.addEventListener('keydown', galleryKeyHandler);
 
     // Close on background click
     if (galleryModal) {
-        galleryModal.addEventListener('click', (e) => {
+        galleryModalHandler = (e) => {
             if (e.target === galleryModal) {
                 closeGallery();
             }
-        });
+        };
+        galleryModal.addEventListener('click', galleryModalHandler);
     }
 }
 
