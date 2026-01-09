@@ -126,7 +126,7 @@ const body = document.body;
 const designNumber = document.getElementById('designNumber');
 
 // Define theme order
-const themes = ['modern', 'classic', 'vintage', 'minimalist', 'luxury', 'apple', 'stark', 'disney', 'creative', 'stark-creative', 'experimental', 'isometric', 'liquid', 'interactive', 'facebook', 'dark', 'words', 'words-classic', 'words-aesthetic', 'chaos', 'terminal'];
+const themes = ['modern', 'classic', 'vintage', 'minimalist', 'luxury', 'apple', 'stark', 'disney', 'creative', 'stark-creative', 'experimental', 'isometric', 'liquid', 'interactive', 'facebook', 'dark', 'words', 'words-classic', 'words-aesthetic', 'chaos', 'terminal', 'experimental-rules', 'conversion', 'clean-conversion', 'minimal-conversion'];
 
 // Check for saved theme preference or default to modern
 const currentTheme = localStorage.getItem('theme') || 'modern';
@@ -219,8 +219,24 @@ designToggle.addEventListener('click', () => {
         body.classList.remove('theme-chaos');
         body.classList.add('theme-terminal');
         localStorage.setItem('theme', 'terminal');
-    } else {
+    } else if (body.classList.contains('theme-terminal')) {
         body.classList.remove('theme-terminal');
+        body.classList.add('theme-experimental-rules');
+        localStorage.setItem('theme', 'experimental-rules');
+    } else if (body.classList.contains('theme-experimental-rules')) {
+        body.classList.remove('theme-experimental-rules');
+        body.classList.add('theme-conversion');
+        localStorage.setItem('theme', 'conversion');
+    } else if (body.classList.contains('theme-conversion')) {
+        body.classList.remove('theme-conversion');
+        body.classList.add('theme-clean-conversion');
+        localStorage.setItem('theme', 'clean-conversion');
+    } else if (body.classList.contains('theme-clean-conversion')) {
+        body.classList.remove('theme-clean-conversion');
+        body.classList.add('theme-minimal-conversion');
+        localStorage.setItem('theme', 'minimal-conversion');
+    } else {
+        body.classList.remove('theme-minimal-conversion');
         body.classList.add('theme-modern');
         localStorage.setItem('theme', 'modern');
     }
